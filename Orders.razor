@@ -1,0 +1,43 @@
+﻿@page "/orders"
+
+<div class="receipt-container">
+    <div class="receipt">
+        <h2>🍕 Pizza Order Receipt</h2>
+        <p class="date">Date: @DateTime.Now.ToString("dddd, dd MMMM yyyy")</p>
+
+        @foreach (var pizza in orderedPizzas)
+        {
+            <div class="item">
+                <div class="info">
+                    <h3>@pizza.Name</h3>
+                    <p>@pizza.Description</p>
+                </div>
+                <div class="price">
+                    $@pizza.Price.ToString("0.00")
+                </div>
+            </div>
+        }
+
+        <hr />
+
+        <div class="total">
+            <strong>Total:</strong> $@orderedPizzas.Sum(p => p.Price).ToString("0.00")
+        </div>
+    </div>
+</div>
+
+@code {
+    public class Pizza
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+    }
+
+    private List<Pizza> orderedPizzas = new()
+    {
+        new Pizza { Name = "Margherita", Description = "Classic cheese & tomato", Price = 7.99M },
+        new Pizza { Name = "Pepperoni", Description = "Spicy pepperoni & mozzarella", Price = 9.49M },
+        new Pizza { Name = "BBQ Chicken", Description = "Chicken, BBQ sauce, red onions", Price = 10.99M }
+    };
+}
